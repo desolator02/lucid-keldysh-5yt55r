@@ -6,9 +6,16 @@ import App from "./App";
 
 const root = createRoot(document.getElementById("root"));
 
-//var cors = require('cors')
-//var app = express()
-//app.use(cors())
+// var cors = require('cors')
+// var express = require('express')
+// var app = express()
+
+// app.use(cors({
+//   origin: [
+//       'https://www.nseindia.com' //nse url
+//   ],    
+//   optionsSuccessStatus: 200
+//   }))
 
 
 root.render(

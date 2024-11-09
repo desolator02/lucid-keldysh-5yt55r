@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, XAxis, YAxis, Line, CartesianGrid, Tooltip } from 'recharts';
 import { Search } from 'lucide-react';
+import axios from 'axios';
 
 interface StockData {
   CH_TRADE_DT: string;
@@ -19,18 +20,25 @@ const StockMarketAnalysisApp = () => {
   useEffect(() => {
     const fetchStockData = async () => {
       try {
-        var url = `https://www.nseindia.com/api/historical/cm/equity?symbol=${searchTerm}` ;
-        console.log ('### url : ' + url)
-        const response = await fetch(`https://www.nseindia.com/api/historical/cm/equity?symbol=${searchTerm}`,
-          {method : 'get',
-          headers: new Headers({
-            'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0',
-            'Sec-Fetch-Mode' : 'cors',
-            'Access-Control-Allow-Origin' : '*'
-          })}
-        );
-        const data = await response.json();
-        setStockData(data.data);
+        // var url = `https://www.nseindia.com/api/historical/cm/equity?symbol=${searchTerm}` ;
+        // console.log ('### url : ' + url)
+        // const response = await fetch(`https://www.nseindia.com/api/historical/cm/equity?symbol=${searchTerm}`,
+        //   {method : 'get',
+        //   headers: new Headers({
+        //     'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0',
+        //     'Sec-Fetch-Mode' : 'cors',
+        //     'Access-Control-Allow-Origin' : '*'
+        //   })}
+        // );
+        // const data = await response.json();
+        // setStockData(data.data);
+
+        const res = await axios.get(`https://www.nseindia.com/api/historical/cm/equity?symbol=${searchTerm}`, {
+          headers: {
+            Accept: '*/*' 
+          }
+        })
+        setStockData(res?.data?.data);
       } catch (error) {
         setError('Failed to fetch stock data : ' + error);
       }
