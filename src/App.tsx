@@ -10,6 +10,7 @@ interface StockData {
   CLOSE: number;
 }
 
+
 const StockMarketAnalysisApp = () => {
   const [stockData, setStockData] = useState<StockData[]>([]);
   const [searchTerm, setSearchTerm] = useState('JIOFIN');
@@ -18,7 +19,16 @@ const StockMarketAnalysisApp = () => {
   useEffect(() => {
     const fetchStockData = async () => {
       try {
-        const response = await fetch(`https://www.nseindia.com/api/historical/cm/equity?symbol=${searchTerm}`);
+        var url = `https://www.nseindia.com/api/historical/cm/equity?symbol=${searchTerm}` ;
+        console.log ('### url : ' + url)
+        const response = await fetch(`https://www.nseindia.com/api/historical/cm/equity?symbol=${searchTerm}`,
+          {method : 'get',
+          headers: new Headers({
+            'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0',
+            'Sec-Fetch-Mode' : 'cors',
+            'Access-Control-Allow-Origin' : '*'
+          })}
+        );
         const data = await response.json();
         setStockData(data.data);
       } catch (error) {
